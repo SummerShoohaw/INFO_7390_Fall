@@ -18,7 +18,7 @@ logger = logging.getLogger()
 # logger.info("Our first message!")
 
 
-# In[2]:
+# In[3]:
 
 
 # pip3 install requests-html
@@ -119,6 +119,36 @@ def main():
 if __name__ == "__main__":
     print ('This is the main of module "Case1_Problem1.py"')
     main()
-	
 
+
+# In[1]:
+
+
+# pip install boto3
+import boto3
+from botocore.client import Config
+
+access_key_id = input('Please input your access_key_id:')
+access_secret_key = input('Please input your access_secret_key:')
+# bucket_name = input('Please input a bucket name:')
+
+ACCESS_KEY_ID = access_key_id
+ACCESS_SECRET_KEY = access_secret_key
+# BUCKET_NAME = bucket_name
+
+BUCKET_NAME = 'info-7390-group-7'
+
+# s3 = boto3.client('s3')
+# s3.create_bucket(Bucket = 'group-7')
+# s3.upload_file('C:\\Users\\butte\\Jupyter\\Case1_Script\\csv_file.zip', 'group-7', 'csv_file.zip')
+
+upload_data = open('C:\\Users\\butte\\Jupyter\\Case1_Script\\csv_file.zip', 'rb')
+upload_key = 'test'
+
+s3 = boto3.resource('s3', aws_access_key_id = ACCESS_KEY_ID, 
+                   aws_secret_access_key = ACCESS_SECRET_KEY,
+                   config = Config(signature_version = 's3v4'))
+
+s3.Bucket(BUCKET_NAME).put_object(Key = upload_key, Body = upload_data)
+print('Uploaded successfully!')
 
