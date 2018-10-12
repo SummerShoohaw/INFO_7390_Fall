@@ -119,4 +119,6 @@ def main():
 if __name__ == "__main__":
     print ('This is the main of module "Case1_Problem1.py"')
     main()
+	
 
+pip freeze > requirements.txt
