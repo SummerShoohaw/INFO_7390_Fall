@@ -185,7 +185,7 @@ def main():
         lg.debug('  start data cleaning for file: ' + filename)
         #read data first
         print('check if file exists')
-        filepath = './extract_2016/'+filename
+        filepath = './extract_'+year+'/'+filename
         if os.path.isfile(filepath):
         	lg.debug(filepath+' exists in the system')
         	table_copy = read_data_from_filename(filepath)
@@ -221,6 +221,7 @@ def main():
             compile_to_file(table_copy, False)
 
     create_bucket()
+
     upload_to_s3('./' + year + '.csv', bucket_name, year + '.csv')
     upload_to_s3('./log' + year +'.log',bucket_name,'log' + year + '.log')
 

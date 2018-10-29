@@ -98,7 +98,11 @@ df = pd.concat(df_list)
 # df.to_csv('C:\Users\butte\Jupyter\Case1_Script\output.csv',index=False,header=False)
 # output the csv file to the destination directory
 logger.debug("# Output the DataFrame to csv files")
-df.to_csv('./output.csv', encoding = 'utf-8', index = False)
+if os.path.isdir('./csv_files'):
+    pass
+else:
+    os.mkdir('./csv_files')
+df.to_csv('./csv_files/output.csv', encoding = 'utf-8', index = False)
 
 print('Output the csv file successfully!')
 
