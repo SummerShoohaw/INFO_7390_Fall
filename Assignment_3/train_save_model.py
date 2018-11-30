@@ -10,6 +10,9 @@ import boto3
 import os
 from botocore.client import Config
 import numpy as np
+from tpot import TPOTClassifier
+import h2o
+from h2o.estimators.deepleearning import H2ODeepLearningEstimator
 
 year = input("Please input year: ")
 quater = input("Please input quater: ")
@@ -95,8 +98,12 @@ def save_model(model, filename):
     pickle.dump(model, open(filename, 'wb'))
 
 def build_fit_model(x_train, y_train):
-    clf = model_chooser()
-    clf.fit(x_train, y_train)
+    if model_choice == '6':
+        clf = model_chooser()
+        clf.train(x=x_train, y=y_train, train_frame=fr)
+    else:
+        clf = model_chooser()
+        clf.fit(x_train, y_train)
     return clf
 
 def model_chooser():
@@ -106,8 +113,13 @@ def model_chooser():
         return MLPClassifier(hidden_layer_sizes = (10,7,5,2))
     elif model_choice == '3':
         return RandomForestClassifier(n_estimators = 100)
-    else:
+    elif model_choice == '4':
         return autosklearn.classification.AutoSklearnClassifier()
+    elif model_choice == '5':
+        return TPOTClassifier(generation=5, population_size=20, verbosity=2)
+    else:
+        h2o.init()
+        return H2ODeepLearningEstimator()
 
 def main():
     print("Start reading data and prepoccessing.")
